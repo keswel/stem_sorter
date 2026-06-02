@@ -1,5 +1,14 @@
 #include <stdio.h>
+#include <string.h>
 #include <dirent.h>
+
+int isAudio(char* f_name) {
+    // prob a better way to do this but oh well.
+    if (strstr(f_name, ".zip")) return 1;
+    if (strstr(f_name, ".mp3")) return 1; 
+    if (strstr(f_name, ".wav")) return 1; 
+    return 0;
+}
 
 int main(void) {
     DIR *folder;
@@ -12,7 +21,8 @@ int main(void) {
     }
 
     while ((entry = readdir(folder)) != NULL) {
-        printf("%s\n", entry->d_name);
+        char* f_name = entry->d_name;
+        if (isAudio(f_name)) printf("Audio! %s\n", f_name);
     }
 
     closedir(folder);
